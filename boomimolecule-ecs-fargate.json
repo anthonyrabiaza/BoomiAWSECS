@@ -1,0 +1,146 @@
+{
+    "ipcMode": null,
+    "executionRoleArn": "arn:aws:iam::@@AWS_ACCOUNT@@:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "dnsSearchDomains": [],
+            "environmentFiles": [],
+            "logConfiguration": {
+                "logDriver": "awsfirelens",
+                "secretOptions": [],
+                "options": {
+                    "delivery_stream": "Boomi_ECS",
+                    "log-driver-buffer-limit": "2097152",
+                    "region": "@@AWS_REGION@@",
+                    "Name": "firehose"
+                }
+            },
+            "entryPoint": [
+                "/mnt/boomi/init.sh"
+            ],
+            "portMappings": [
+                {
+                    "hostPort": 9090,
+                    "protocol": "tcp",
+                    "containerPort": 9090
+                }
+            ],
+            "command": [],
+            "linuxParameters": null,
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "ATOM_LOCALHOSTID",
+                    "value": "NODE_0"
+                },
+                {
+                    "name": "BOOMI_USERNAME",
+                    "value": "@@BOOMI_USERNAME@@"
+                },
+                {
+                    "name": "BOOMI_ATOMNAME",
+                    "value": "aws_molecule_docker_ecs_fargate"
+                },
+                {
+                    "name": "BOOMI_ENVIRONMENTID",
+                    "value": "@@BOOMI_ENVIRONMENTID@@"
+                },
+                {
+                    "name": "BOOMI_ACCOUNTID",
+                    "value": "@@BOOMI_ACCOUNTID@@"
+                },
+                {
+                    "name": "ATOM_VMOPTIONS_OVERRIDES",
+                    "value": "-Xmx2g|-Dfile.encoding=UTF-8"
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": [],
+            "dnsServers": [],
+            "mountPoints": [
+                {
+                    "readOnly": false,
+                    "containerPath": "/mnt/boomi",
+                    "sourceVolume": "mntboomi"
+                }
+            ],
+            "workingDirectory": null,
+            "secrets": [
+                {
+                    "valueFrom": "arn:aws:secretsmanager:@@AWS_REGION@@:@@AWS_ACCOUNT@@:secret:boomi/atomsphere/@@AWS_PASSWORD_ARN@@",
+                    "name": "BOOMI_PASSWORD"
+                }
+            ],
+            "dockerSecurityOptions": [],
+            "memory": 6144,
+            "memoryReservation": null,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "boomi/molecule:4.0.0",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": [],
+            "hostname": null,
+            "extraHosts": [],
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": {},
+            "systemControls": [],
+            "privileged": false,
+            "name": "boomi_molecule"
+        }
+    ],
+    "memory": "8192",
+    "taskRoleArn": "arn:aws:iam::@@AWS_ACCOUNT@@:role/ecsTaskExecutionRole",
+    "family": "boomi-aws-ecs-fargate-molecule",
+    "pidMode": null,
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "networkMode": "awsvpc",
+    "runtimePlatform": {
+        "operatingSystemFamily": "LINUX",
+        "cpuArchitecture": null
+    },
+    "cpu": "2048",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": [
+        {
+            "fsxWindowsFileServerVolumeConfiguration": null,
+            "efsVolumeConfiguration": {
+                "transitEncryptionPort": null,
+                "fileSystemId": "@@AWS_EFS_ID@@",
+                "authorizationConfig": {
+                    "iam": "DISABLED",
+                    "accessPointId": null
+                },
+                "transitEncryption": "DISABLED",
+                "rootDirectory": "/"
+            },
+            "name": "mntboomi",
+            "host": null,
+            "dockerVolumeConfiguration": null
+        }
+    ],
+    "tags": [
+        {
+            "key": "ecs:taskDefinition:createdFrom",
+            "value": "ecs-console-v2"
+        },
+        {
+            "key": "ecs:taskDefinition:stackId",
+            "value": "arn:aws:cloudformation:@@AWS_REGION@@:@@AWS_ACCOUNT@@:stack/ECS-Console-V2-TaskDefinition-ddcaa1b3-4caa-4965-8356-a2d3012f590a/9685aae0-95e3-11ec-9209-02251b8105e4"
+        },
+        {
+            "key": "user",
+            "value": "Anthony Rabiaza"
+        }
+    ]
+}
